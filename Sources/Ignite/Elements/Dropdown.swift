@@ -15,6 +15,13 @@ public protocol DropdownElement: InlineElement { }
 /// Can be used as a free-floating element on your page, or in
 /// a `NavigationBar`.
 public struct Dropdown: BlockElement, NavigationItem {
+
+	public enum MenuAlignment: String {
+		case leading = ""
+		case trailing = "dropdown-menu-end"
+
+	}
+
     /// The standard set of control attributes for HTML elements.
     public var attributes = CoreAttributes()
 
@@ -30,8 +37,10 @@ public struct Dropdown: BlockElement, NavigationItem {
     /// How large this dropdown should be drawn. Defaults to `.medium`.
     var size = ButtonSize.medium
 
-    /// How this dropdown should be styled on the screen. Defaults to `.defaut`.
+    /// How this dropdown should be styled on the screen. Defaults to `.default`.
     var role = Role.default
+
+	var alignment: MenuAlignment = .leading
 
     /// Controls whether this dropdown needs to be created as its own element,
     /// or whether it uses the structure provided by a parent `NavigationBar`.
@@ -113,10 +122,16 @@ public struct Dropdown: BlockElement, NavigationItem {
                 }
             }
             .listStyle(.unordered(.default))
-            .class("dropdown-menu")
+			.class("dropdown-menu", alignment.rawValue)
         }
         .attributes(attributes)
         .class("dropdown")
         .render(context: context)
     }
+
+	public func menuAlignment(_ alignment: MenuAlignment) -> Self {
+		var copy = self
+		copy.alignment = alignment
+		return copy
+	}
 }
