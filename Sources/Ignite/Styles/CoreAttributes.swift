@@ -35,7 +35,7 @@ public struct CoreAttributes {
 	public init() { }
 
     /// All core attributes collapsed down to a single string for easy application.
-    var description: String {
+    public var description: String {
         "\(idString)\(customAttributeString)\(classString)\(styleString)\(dataString)\(ariaString)\(eventString)"
     }
 
